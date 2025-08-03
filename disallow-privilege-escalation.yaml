@@ -1,0 +1,25 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-privilege-escalation
+spec:
+  validationFailureAction: audit  # Changed to audit initially
+  background: true
+  rules:
+    - name: disallow-priv-escalation
+      match:
+        any:
+        - resources:
+            kinds: ["Pod"]
+        exclude:
+        - resources:
+            namespaces: ["kube-system", "argocd", "crossplane-system"]
+      validate:
+        message: "Privilege escalation is not allowed"
+        pattern:
+          spec:
+            =(securityContext):
+              =(allowPrivilegeEscalation): false
+            containers:
+              - =(securityContext):
+                  =(allowPrivilegeEscalation): false

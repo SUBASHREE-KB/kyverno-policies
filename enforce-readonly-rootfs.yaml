@@ -1,0 +1,24 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: enforce-readonly-rootfs
+spec:
+  validationFailureAction: audit  # Changed to audit initially
+  background: true
+  rules:
+    - name: require-read-only-root-fs
+      match:
+        any:
+        - resources:
+            kinds: ["Pod"]
+        exclude:
+        - resources:
+            namespaces: ["kube-system", "argocd", "crossplane-system"]
+      validate:
+        message: "Root filesystem must be read-only"
+        pattern:
+          spec:
+            containers:
+            - name: "*"
+              securityContext:
+                readOnlyRootFilesystem: true
