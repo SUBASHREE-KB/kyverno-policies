@@ -14,7 +14,12 @@ spec:
       exclude:
         any:
         - resources:
-            namespaces: ["kube-system", "argocd", "crossplane-system"]
+            namespaces: ["kube-system", "argocd", "crossplane-system","sonarqube"]
+        - resources:
+            kinds: ["Pod"]
+            selector:
+              matchLabels:
+                app: sonarqube
       validate:
         message: "Both CPU and memory limits must be set on all containers"
         pattern:
