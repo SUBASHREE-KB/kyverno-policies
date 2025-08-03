@@ -3,7 +3,7 @@ kind: ClusterPolicy
 metadata:
   name: enforce-readonly-rootfs
 spec:
-  validationFailureAction: audit  # Changed to audit initially
+  validationFailureAction: audit
   background: true
   rules:
     - name: require-read-only-root-fs
@@ -11,7 +11,8 @@ spec:
         any:
         - resources:
             kinds: ["Pod"]
-        exclude:
+      exclude:
+        any:
         - resources:
             namespaces: ["kube-system", "argocd", "crossplane-system"]
       validate:
