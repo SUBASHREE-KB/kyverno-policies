@@ -14,7 +14,7 @@ spec:
       exclude:
         any:
         - resources:
-            namespaces: ["kube-system", "argocd", "crossplane-system"]
+            namespaces: ["kube-system", "argocd", "crossplane-system","sonarqube"]
       validate:
         message: "Root filesystem must be read-only"
         pattern:
