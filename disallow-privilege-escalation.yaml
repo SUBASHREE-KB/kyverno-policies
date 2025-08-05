@@ -14,12 +14,7 @@ spec:
       exclude:
         any:
         - resources:
-            namespaces: ["kube-system", "argocd", "crossplane-system","sonarqube"]
-        - resources:
-            kinds: ["Pod"]
-            selector:
-              matchLabels:
-                app: sonarqube
+            namespaces: ["kube-system", "argocd", "crossplane-system"]
       validate:
         message: "Privilege escalation is not allowed"
         pattern:
